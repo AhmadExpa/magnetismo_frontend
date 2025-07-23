@@ -36,7 +36,7 @@ const TermsPolicy = () => {
 
       <h2 className="text-xl font-semibold mt-6 mb-2">6. Shipping, Returns, and Refunds</h2>
       <p className="mb-4">
-        Shipping, return, and refund policies are covered separately in our <a href="/shipping" className="text-blue-600 underline">Shipping</a>, <a href="/returns" className="text-blue-600 underline">Returns</a>, and <a href="/refund" className="text-blue-600 underline">Refund Policy</a> pages.
+        Shipping, return, and refund policies are covered separately in our <a href="/ShippingPolicy" className="text-blue-600 underline">Shipping</a> and <a href="/moneyback" className="text-blue-600 underline">Refund Policy</a> pages.
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">7. Limitation of Liability</h2>
