@@ -1,0 +1,16 @@
+/* In your global CSS file (e.g., App.css or index.css) */
+@keyframes slideInRight {
+    0% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .slide-in-right {
+    animation: slideInRight 0.4s ease-out forwards;
+  }
+  
