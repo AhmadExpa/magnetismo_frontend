@@ -173,7 +173,7 @@ export default function Footer() {
 
           <p
             className="cursor-pointer hover:underline"
-            onClick={() => handleRoute("privacyPolicy")}
+            onClick={() => handleRoute("PrivacyPolicy")}
           >
             Privacy Policy
           </p>
@@ -181,7 +181,7 @@ export default function Footer() {
 
           <p
             className="cursor-pointer hover:underline"
-            onClick={() => handleRoute("shippingPolicy")}
+            onClick={() => handleRoute("ShippingPolicy")}
           >
             Shipping Policy
           </p>
@@ -189,7 +189,7 @@ export default function Footer() {
 
           <p
             className="cursor-pointer hover:underline"
-            onClick={() => handleRoute("termsPolicy")}
+            onClick={() => handleRoute("TermsPolicy")}
           >
             Terms of Services
           </p>
