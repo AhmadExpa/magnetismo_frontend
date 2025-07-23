@@ -14,8 +14,9 @@ export default function Footer() {
   const location = useLocation();
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
-  const handlePolicy = () => {
-    navigate("/moneyback");
+
+  const handleRoute = (route) => {
+    navigate(`/${route}`);
   };
 
   return (
@@ -28,10 +29,7 @@ export default function Footer() {
           playsInline
           className="w-full shadow-lg object-cover brightness-enhance"
         >
-          <source
-            src={VITE_FOOTER_SECTION_VIDEO_URL}
-            type="video/mp4"
-          />
+          <source src={VITE_FOOTER_SECTION_VIDEO_URL} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
@@ -65,7 +63,6 @@ export default function Footer() {
                   { label: "HOW IT WORKS", path: "/how-it-works" },
                   { label: "PRODUCT", path: "/product" },
                   { label: "FAQS", path: "/faq" },
-                  
                 ].map(({ label, path }) => (
                   <li key={label}>
                     <NavLink
@@ -160,18 +157,41 @@ export default function Footer() {
             </div>
           </div>
         </footer>
-        {/* <div className="bg-[#293E75] md:flex md:flex-row flex-col items-center mx-auto justify-center py-4 text-sm text-gray-200">
-          <span className="max-w-[1440px] md:px-4 px-2">
-            © {new Date().getFullYear()} All rights reserved By Magnetismo.
-          </span>
-          <p className="" onClick={handlePolicy}> Policy</p>
-        </div> */}
-        <div className="bg-blue-900 flex flex-col md:flex-row items-center justify-center gap-2 py-4 text-sm text-gray-200 text-center md:text-left">
+
+        <div className="bg-blue-900 flex flex-col md:flex-row items-center justify-center gap-2 py-4 text-sm text-gray-200 text-center md:text-left flex-wrap">
           <span className="max-w-screen-xl px-2 md:px-4">
             © {new Date().getFullYear()} All rights reserved By Magnetismo.
           </span>
-          <p className="cursor-pointer hover:underline" onClick={handlePolicy}>
+
+          <p
+            className="cursor-pointer hover:underline"
+            onClick={() => handleRoute("moneyback")}
+          >
             Return Policy
+          </p>
+          <span className="hidden md:inline">|</span>
+
+          <p
+            className="cursor-pointer hover:underline"
+            onClick={() => handleRoute("privacyPolicy")}
+          >
+            Privacy Policy
+          </p>
+          <span className="hidden md:inline">|</span>
+
+          <p
+            className="cursor-pointer hover:underline"
+            onClick={() => handleRoute("shippingPolicy")}
+          >
+            Shipping Policy
+          </p>
+          <span className="hidden md:inline">|</span>
+
+          <p
+            className="cursor-pointer hover:underline"
+            onClick={() => handleRoute("termsPolicy")}
+          >
+            Terms of Services
           </p>
         </div>
       </div>

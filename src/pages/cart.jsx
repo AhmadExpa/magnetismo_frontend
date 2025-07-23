@@ -105,9 +105,11 @@ const ShoppingCart = () => {
                   <span className="font-bold">${product.price}</span>
                 </div>
 
-                <button className="mt-1 text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded">
-                  SAVE $10.00
-                </button>
+                {product.price < 49 && (
+                  <button className="mt-1 text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded">
+                    SAVE ${((49 - product.price) * product.quantity).toFixed(2)}
+                  </button>
+                )}
 
                 <div className="flex items-center mt-2">
                   <button
@@ -154,17 +156,7 @@ const ShoppingCart = () => {
 
             <div className="flex justify-between mb-2">
               <span className="text-gray-600">Shipping</span>
-              <span>Free</span>
-            </div>
-
-            <div className="flex justify-between mb-2">
-              <span className="text-gray-600">Discount</span>
-              <span>$0.00</span>
-            </div>
-
-            <div className="flex justify-between mb-2">
-              <span className="text-gray-600">Tax</span>
-              <span>$0.00</span>
+              <span>Calculated at checkout based on your location</span>
             </div>
 
             <div className="border-t pt-2 mt-2">
