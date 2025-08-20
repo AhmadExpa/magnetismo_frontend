@@ -1,4 +1,4 @@
-export const VITE_HOME_HERO_SECTION_VIDEO_URL = "https://res.cloudinary.com/ddtnvnuzi/video/upload/v1755636121/Magnetismo_Animation_3D_Girl_oq6epk.mp4"
+export const VITE_HOME_HERO_SECTION_VIDEO_URL = "https://res.cloudinary.com/ddtnvnuzi/video/upload/v1755636118/Magnetismo_Animattion_HD_vblxmd.mp4"
 export const VITE_HOME_HERO_SECTION_VIDEO2_URL = "https://res.cloudinary.com/ddtqjxuok/video/upload/v1752040467/long_w17xzk.mp4"
 export const VITE_VIDEO_IN_HOME_SCREENTIME_SECTION = "https://res.cloudinary.com/ddtqjxuok/video/upload/v1752043045/screentimevideo_z1dndj.mp4"
 export const VITE_PRICE_VIDEO_IN_INNOVATIVE_AND_HOW_IT_WORKS_PAGE = "https://res.cloudinary.com/ddtnvnuzi/video/upload/v1755636121/Magnetismo_Animation_3D_Girl_oq6epk.mp4"
