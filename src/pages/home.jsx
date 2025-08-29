@@ -98,27 +98,26 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, []);
 
- const bannerIntervalRef = useRef(null);
- 
+  const bannerIntervalRef = useRef(null);
 
-useEffect(() => {
-  startBannerInterval();
-  return () => clearBannerInterval();
-}, [bannerSlides.length]);
+  useEffect(() => {
+    startBannerInterval();
+    return () => clearBannerInterval();
+  }, [bannerSlides.length]);
 
-const startBannerInterval = () => {
-  clearBannerInterval();
-  bannerIntervalRef.current = setInterval(() => {
-    setCurrentBannerSlide((prev) => (prev + 1) % bannerSlides.length);
-  }, 3000);
-};
+  const startBannerInterval = () => {
+    clearBannerInterval();
+    bannerIntervalRef.current = setInterval(() => {
+      setCurrentBannerSlide((prev) => (prev + 1) % bannerSlides.length);
+    }, 3000);
+  };
 
-const clearBannerInterval = () => {
-  if (bannerIntervalRef.current) {
-    clearInterval(bannerIntervalRef.current);
-    bannerIntervalRef.current = null;
-  }
-};
+  const clearBannerInterval = () => {
+    if (bannerIntervalRef.current) {
+      clearInterval(bannerIntervalRef.current);
+      bannerIntervalRef.current = null;
+    }
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -256,7 +255,7 @@ const clearBannerInterval = () => {
         <QualityInnovative />
       </section>
 
-      <section className="mt-5 relative ">
+      {/* <section className="mt-5 relative ">
         <div>
           <div className="">
             <video
@@ -269,7 +268,7 @@ const clearBannerInterval = () => {
             />
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section>
         <div>
@@ -278,60 +277,46 @@ const clearBannerInterval = () => {
       </section>
 
       <div className="max-w-[1440px] mx-auto px-2 md:px-4">
-        <section className="py-5 ">
-          {/* <h2 className="text-[30px] md:text-[40px] font-bold mb-10 ml-10 text-center md:text-start uppercase">
-            HOW <span className="text-[#273771]">Magnetismo</span> WORKS?
-          </h2> */}
-          <div className="lg:flex lg:ps-10 ">
-            <div className="lg:w-1/2 mt-10 ">
-              <video
-                src={VITE_VIDEO_IN_HOME_SCREENTIME_SECTION}
-                className=" lg:h-[300px] object-cover rounded-md "
-                loop
-                muted
-                autoPlay
-              />
+        <section className="py-12 bg-gray-50">
+          <div className="max-w-6xl mx-auto px-6 lg:flex lg:items-center lg:gap-12">
+            {/* Image Section */}
+            <div className="lg:w-1/2 flex justify-center">
+              <div className="relative w-[320px] h-[320px]">
+                <img
+                  src={logoimg}
+                  alt="Logo"
+                  className="w-full h-full object-contain rounded-2xl"
+                />
+                {/* Overlay CTA */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/30 rounded-2xl opacity-0 hover:opacity-100 transition duration-300">
+                  <p className="text-white text-lg font-medium">
+                    Discover More
+                  </p>
+                  <button
+                    onClick={handleDiscover}
+                    className="bg-[#273771] hover:bg-[#1d2b59] px-4 py-2 rounded-full text-white font-semibold transition"
+                  >
+                    →
+                  </button>
+                </div>
+              </div>
             </div>
 
-            <div className="md:w-1/2 text-center md:text-start lg:justify-start md:justify-center lg:mx-start md:mx-auto">
-              <h1 className=" text-[#273771] text-2xl my-5 font-bold">
+            {/* Text Section */}
+            <div className="lg:w-1/2 text-center lg:text-left mt-10 lg:mt-0">
+              <h1 className="text-3xl lg:text-4xl font-bold text-[#273771]">
                 From Screen Fatigue to Soothing Relief
               </h1>
-              <p className="text-gray-700">
-                From Digital strain to natural ease
+              <p className="text-lg text-gray-600 mt-4">
+                From digital strain to natural ease.
               </p>
-
-              <p className="text-gray-700 pt-3">
+              <p className="text-gray-600 mt-3 leading-relaxed">
                 Magnetismo clip-on is your must-have accessory for natural
                 headache relief and stress-free screen time.
               </p>
-              <p className="mt-4 text-gray-700">
+              <p className="mt-4 text-gray-600 font-medium">
                 Recommended by ophthalmologists, optometrists, and opticians.
               </p>
-              <div className="relative md:w-[300px] md:h-[300px] items-center mt-6 space-x-4 px-8 md:px-0">
-                <div className="relative">
-                  <img
-                    src={logoimg}
-                    alt="Logo"
-                    className="md:w-300 md:h-300  mt-3 rounded-md object-cover"
-                  />
-                  <div
-                    onClick={handleDiscover}
-                    className="w-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-center items-center  gap-4 p-4"
-                  >
-                    <div>
-                      <p className="text-gray-700 md:text-[16px] text-[14px]">
-                        DISCOVER MORE
-                      </p>
-                    </div>
-                    <div>
-                      <button className="bg-[#273771] px-2 py-1 rounded-full text-white">
-                        →
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </section>
@@ -439,7 +424,7 @@ const clearBannerInterval = () => {
         </div>
         <div className="hidden lg:block absolute right-0 top-1/2 transform -translate-y-1/2 border-r border-gray-400 md:h-[200px]"></div>
 
-        <section 
+        <section
           className="relative w-full overflow-visible"
           onMouseEnter={handleSliderMouseEnter}
           onMouseLeave={handleSliderMouseLeave}
@@ -574,7 +559,7 @@ const clearBannerInterval = () => {
                   </div>
                 </div>
               ))}
-            </Slider> 
+            </Slider>
           </div>
         </section>
       </div>

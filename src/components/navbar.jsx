@@ -1,41 +1,66 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FiMenu, FiX, FiChevronDown } from "react-icons/fi";
 import { useAppSelector } from "../store/store";
 import logo from "../assets/home/Magnetismo_Logo.png";
 import cart from "../assets/home/Cart.png";
 import { motion, AnimatePresence } from "framer-motion";
-import { HashLink } from "react-router-hash-link";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolling, setScrolling] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [step, setStep] = useState(1);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const dropdownRef = useRef(null);
 
   const toggleMenu = () => setIsOpen(!isOpen);
-  const closeMenu = () => setIsOpen(false);
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+  const closeMenu = () => {
+    setIsOpen(false);
+    setActiveDropdown(null);
+  };
 
   const activeStyle = "text-[#273771] border-b-2 border-[#273771] pb-1";
 
+  // Safely access the cart state with proper error handling
   const { products } = useAppSelector("cartSlice");
   const totalQuantity = products.reduce(
     (total, product) => total + product.quantity,
     0
   );
 
+  // Function to handle dropdown click (for both desktop and mobile)
+  const handleDropdownClick = (dropdownName) => {
+    if (activeDropdown === dropdownName) {
+      setActiveDropdown(null);
+    } else {
+      setActiveDropdown(dropdownName);
+    }
+  };
+
   // Function to handle product dropdown item clicks
   const handleProductItemClick = (hash) => {
-    // Navigate to product page with hash
     navigate(`/product${hash}`);
     closeMenu();
-    setProductDropdownOpen(false);
   };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setActiveDropdown(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      setStep((prev) => (prev === 3 ? 1 : prev + 1)); // loop back to 1 after 3
-    }, 3000); // delay between transitions
+      setStep((prev) => (prev === 3 ? 1 : prev + 1));
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, [step]);
@@ -51,20 +76,6 @@ export default function Navbar() {
   const navigate = useNavigate();
   const handleMoneyBack = () => {
     navigate("/moneyback");
-  };
-
-  const handleHowItWorksClick = () => {
-    if (dropdownOpen) {
-      navigate("/how-it-works");
-      closeMenu();
-    }
-    toggleDropdown();
-  };
-  const [productDropdownOpen, setProductDropdownOpen] = useState(false);
-
-  const handleProductClick = () => {
-    setProductDropdownOpen(!productDropdownOpen);
-    setDropdownOpen(false); // ye "How it Works" wala close karega
   };
 
   return (
@@ -142,7 +153,7 @@ export default function Navbar() {
           </NavLink>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-6 ">
+          <div className="hidden md:flex space-x-6" ref={dropdownRef}>
             <NavLink
               to="/"
               onClick={closeMenu}
@@ -154,59 +165,20 @@ export default function Navbar() {
             </NavLink>
 
             {/* How It Works Dropdown */}
-            <div className="relative group ">
+            <div className="relative">
               <div
-                onClick={handleHowItWorksClick}
                 className="flex items-center hover:text-black transition cursor-pointer"
+                onClick={() => handleDropdownClick("howItWorks")}
               >
                 HOW IT WORKS <FiChevronDown className="ml-1" />
               </div>
-              {dropdownOpen && (
-                <ul className="absolute left-0 mt-2 space-y-2 text-center bg-white rounded shadow-lg md:w-[160px]">
-                  <li>
-                    <NavLink
-                      to="how-it-works/story#story"
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                      onClick={() => {
-                        closeMenu();
-                        setDropdownOpen(false);
-                      }}
-                    >
-                      Our Story 
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="/how-it-works/#mission"
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                      onClick={() => {
-                        closeMenu();
-                        setDropdownOpen(false);
-                      }}
-                    >
-                      Our Mission
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="/how-it-works/#about"
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                      onClick={() => {
-                        closeMenu();
-                        setDropdownOpen(false);
-                      }}
-                    >
-                      About Us
-                    </NavLink>
-                  </li>
+              {activeDropdown === "howItWorks" && (
+                <ul className="absolute left-0 mt-2 space-y-2 text-center bg-white rounded shadow-lg md:w-[160px] z-50">
                   <li>
                     <NavLink
                       to="/how-it-works#how-to-use"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                      onClick={() => {
-                        closeMenu();
-                        setDropdownOpen(false);
-                      }}
+                      onClick={closeMenu}
                     >
                       How to Use
                     </NavLink>
@@ -215,10 +187,7 @@ export default function Navbar() {
                     <NavLink
                       to="/faq"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                      onClick={() => {
-                        closeMenu();
-                        setDropdownOpen(false);
-                      }}
+                      onClick={closeMenu}
                     >
                       FAQs
                     </NavLink>
@@ -227,16 +196,57 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* Product Dropdown */}
-            <div className="relative group">
+            {/* Story Dropdown */}
+            <div className="relative">
               <div
-                onClick={handleProductClick}
                 className="flex items-center hover:text-black transition cursor-pointer"
+                onClick={() => handleDropdownClick("story")}
+              >
+                STORY <FiChevronDown className="ml-1" />
+              </div>
+              {activeDropdown === "story" && (
+                <ul className="absolute left-0 mt-2 space-y-2 text-center bg-white rounded shadow-lg md:w-[160px] z-50">
+                  <li>
+                    <NavLink
+                      to="/story#our-story"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      onClick={closeMenu}
+                    >
+                      Our Story
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/how-it-works#about"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      onClick={closeMenu}
+                    >
+                      About Us
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/how-it-works#mission"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      onClick={closeMenu}
+                    >
+                      Our Mission
+                    </NavLink>
+                  </li>
+                </ul>
+              )}
+            </div>
+
+            {/* Product Dropdown */}
+            <div className="relative">
+              <div
+                className="flex items-center hover:text-black transition cursor-pointer"
+                onClick={() => handleDropdownClick("product")}
               >
                 PRODUCT <FiChevronDown className="ml-1" />
               </div>
-              {productDropdownOpen && (
-                <ul className="absolute left-0 mt-2 space-y-2 text-center bg-white rounded shadow-lg md:w-[160px]">
+              {activeDropdown === "product" && (
+                <ul className="absolute left-0 mt-2 space-y-2 text-center bg-white rounded shadow-lg md:w-[160px] z-50">
                   <li>
                     <button
                       onClick={() => handleProductItemClick("#gallery")}
@@ -282,7 +292,7 @@ export default function Navbar() {
             </div>
 
             <NavLink
-              to="/contact us"
+              to="/contact"
               onClick={closeMenu}
               className={({ isActive }) =>
                 isActive ? activeStyle : "hover:text-black transition"
@@ -323,7 +333,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden absolute top-[60px] left-0 w-full bg-gray-100 shadow-md ">
+          <div className="md:hidden absolute top-full left-0 w-full bg-gray-100 shadow-md z-50">
             <ul className="flex flex-col ml-5 py-4 space-y-4">
               {/* Mobile: Home */}
               <li>
@@ -344,32 +354,17 @@ export default function Navbar() {
               <li>
                 <div
                   className="flex items-center justify-between py-2 text-gray-700 hover:text-black cursor-pointer"
-                  onClick={handleHowItWorksClick}
+                  onClick={() => handleDropdownClick("howItWorks")}
                 >
-                  How it works <FiChevronDown className="ml-1 " />
+                  How It Works <FiChevronDown className="ml-1 " />
                 </div>
-                {dropdownOpen && (
+                {activeDropdown === "howItWorks" && (
                   <ul className="ml-4 space-y-2">
                     <li>
                       <NavLink
-                        to="/story"
+                        to="/how-it-works#how-to-use"
                         className="block py-2 text-gray-700 hover:text-black"
-                        onClick={() => {
-                          closeMenu();
-                          setDropdownOpen(false);
-                        }}
-                      >
-                        Our Story & Mission
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink
-                        to="/how-it-works"
-                        className="block py-2 text-gray-700 hover:text-black"
-                        onClick={() => {
-                          closeMenu();
-                          setDropdownOpen(false);
-                        }}
+                        onClick={closeMenu}
                       >
                         How to Use
                       </NavLink>
@@ -378,10 +373,7 @@ export default function Navbar() {
                       <NavLink
                         to="/faq"
                         className="block py-2 text-gray-700 hover:text-black"
-                        onClick={() => {
-                          closeMenu();
-                          setDropdownOpen(false);
-                        }}
+                        onClick={closeMenu}
                       >
                         FAQs
                       </NavLink>
@@ -389,15 +381,57 @@ export default function Navbar() {
                   </ul>
                 )}
               </li>
+
+              {/* Mobile: Story Dropdown */}
+              <li>
+                <div
+                  className="flex items-center justify-between py-2 text-gray-700 hover:text-black cursor-pointer"
+                  onClick={() => handleDropdownClick("story")}
+                >
+                  Story <FiChevronDown className="ml-1 " />
+                </div>
+                {activeDropdown === "story" && (
+                  <ul className="ml-4 space-y-2">
+                    <li>
+                      <NavLink
+                        to="/story#our-story"
+                        className="block py-2 text-gray-700 hover:text-black"
+                        onClick={closeMenu}
+                      >
+                        Our Story
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/how-it-works#about"
+                        className="block py-2 text-gray-700 hover:text-black"
+                        onClick={closeMenu}
+                      >
+                        About Us
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/how-it-works#mission"
+                        className="block py-2 text-gray-700 hover:text-black"
+                        onClick={closeMenu}
+                      >
+                        Our Mission
+                      </NavLink>
+                    </li>
+                  </ul>
+                )}
+              </li>
+
               {/* Mobile: Product Dropdown */}
               <li>
                 <div
                   className="flex items-center justify-between py-2 text-gray-700 hover:text-black cursor-pointer"
-                  onClick={handleProductClick}
+                  onClick={() => handleDropdownClick("product")}
                 >
                   Product <FiChevronDown className="ml-1" />
                 </div>
-                {productDropdownOpen && (
+                {activeDropdown === "product" && (
                   <ul className="ml-4 space-y-2">
                     <li>
                       <button
@@ -442,9 +476,11 @@ export default function Navbar() {
                   </ul>
                 )}
               </li>
+
+              {/* Mobile: Contact Us */}
               <li>
                 <NavLink
-                  to="/contact us"
+                  to="/contact"
                   className={({ isActive }) =>
                     isActive
                       ? activeStyle
