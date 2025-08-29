@@ -17,7 +17,12 @@ import { FaCheck } from "react-icons/fa";
 import newforproduct from "../assets/images/newforproduct.jpg";
 import newforproducttwo from "../assets/images/newforproducttwo.jpg";
 import newforproductthree from "../assets/images/newforproductthree.jpg";
-import { VITE_PRODUCT_HERO_SECTION_VIDEO_URL, VITE_PRODUCT_ID } from "../enviroment";
+import {
+  VITE_PRODUCT_HERO_SECTION_VIDEO_URL,
+  VITE_PRODUCT_ID,
+} from "../enviroment";
+
+
 
 const images = [
   newforproductthree,
@@ -136,6 +141,12 @@ const Products = () => {
     location.state?.activeTab || "DESCRIPTION"
   );
 
+  const galleryRef = useRef(null);
+  const instructionsRef = useRef(null);
+  const warningsRef = useRef(null);
+  const warrantyRef = useRef(null);
+
+
   // Toast state
   const [toast, setToast] = useState({
     isVisible: false,
@@ -147,28 +158,38 @@ const Products = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  useEffect(() => {
-    if (location.hash) {
-      const id = location.hash.replace("#", "");
-      const el = document.getElementById(id);
-      if (el) {
-        setTimeout(() => {
-          el.scrollIntoView({ behavior: "smooth" });
-        }, 100);
-      }
-    }
-  }, [location]);
+  // Map hash values to tab names and refs
+  const hashToTabMap = {
+    "#gallery": { tab: "GALLERY", ref: galleryRef },
+    "#instructions": { tab: "INSTRUCTIONS", ref: instructionsRef },
+    "#reviews": { tab: "REVIEWS", ref: reviewRef },
+    "#warnings": { tab: "WARNING", ref: warningsRef },
+    "#warranty": { tab: "WARRANTY", ref: warrantyRef },
+  };
 
+ 
   useEffect(() => {
+    // Handle hash navigation
     if (location.hash) {
-      const element = document.querySelector(location.hash);
-      if (element) {
+      const hash = location.hash.toLowerCase();
+      const tabInfo = hashToTabMap[hash];
+
+      if (tabInfo) {
+        // Set the active tab
+        setActiveTab(tabInfo.tab);
+
+        // Scroll to the section after a short delay to allow rendering
         setTimeout(() => {
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
+          if (tabInfo.ref.current) {
+            tabInfo.ref.current.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
         }, 300);
       }
     }
-  }, [location]);
+  }, [location.hash]);
 
   const [productDetail, setProductDetail] = useState({
     title: "",
@@ -199,18 +220,6 @@ const Products = () => {
 
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (location?.state?.scrollTo === "reviews") {
-      setTimeout(() => {
-        reviewRef.current?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }, 300);
-    }
-    window.scrollTo(0, 0);
-  }, []);
 
   const increaseQuantity = () => setQuantity((prev) => prev + 1);
   const decreaseQuantity = () =>
@@ -255,18 +264,6 @@ const Products = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  useEffect(() => {
-    if (location.hash) {
-      const id = location.hash.replace("#", "");
-      const ww = document.getElementById(id);
-      if (ww) {
-        setTimeout(() => {
-          ww.scrollIntoView({ behavior: "smooth" });
-        }, 100);
-      }
-    }
-  }, [location]);
 
   return (
     <div className=" bg-gray-100">
@@ -468,43 +465,91 @@ const Products = () => {
             </div>
           </div>
 
-          <div className="sm:px-2  w-full   ">
+          <div className="sm:px-2  w-full">
+            {/* GALLERY Section */}
             <div
-              className="py-2 px-6  mt-4 text-[16px] text-gray-700 overflow-auto"
-              ref={reviewRef}
+              id="gallery"
+              ref={galleryRef}
+              className={`py-2 px-6 mt-4 text-[16px] text-gray-700 overflow-auto ${
+                activeTab === "GALLERY" ? "" : "hidden"
+              }`}
             >
-              {activeTab === "REVIEWS" ? (
-                <Reviews />
-              ) : activeTab === "WARNING" ? (
-                <div>
-                  <div className="flex items-center gap-4  ">
-                    <img
-                      src={tabs.find((tab) => tab.name === "WARNING")?.image}
-                      alt="Warning Icon"
-                      className="w-16 h-16"
-                    />
-                    <p>{tabs.find((tab) => tab.name === "WARNING")?.content}</p>
-                  </div>
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: tabs.find((tab) => tab.name === "WARNING")
-                        ?.points,
-                    }}
-                  ></p>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: tabs.find((tab) => tab.name === "GALLERY")?.content,
+                }}
+              ></div>
+            </div>
+
+            {/* INSTRUCTIONS Section */}
+            <div
+              id="instructions"
+              ref={instructionsRef}
+              className={`py-2 px-6 mt-4 text-[16px] text-gray-700 overflow-auto ${
+                activeTab === "INSTRUCTIONS" ? "" : "hidden"
+              }`}
+            >
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: tabs.find((tab) => tab.name === "INSTRUCTIONS")
+                    ?.content,
+                }}
+              ></div>
+            </div>
+
+            {/* REVIEWS Section */}
+            <div
+              id="reviews"
+              ref={reviewRef}
+              className={`py-2 px-6 mt-4 text-[16px] text-gray-700 overflow-auto ${
+                activeTab === "REVIEWS" ? "" : "hidden"
+              }`}
+            >
+              <Reviews />
+            </div>
+
+            {/* WARNING Section */}
+            <div
+              id="warnings"
+              ref={warningsRef}
+              className={`py-2 px-6 mt-4 text-[16px] text-gray-700 overflow-auto ${
+                activeTab === "WARNING" ? "" : "hidden"
+              }`}
+            >
+              <div>
+                <div className="flex items-center gap-4  ">
+                  <img
+                    src={tabs.find((tab) => tab.name === "WARNING")?.image}
+                    alt="Warning Icon"
+                    className="w-16 h-16"
+                  />
+                  <p>{tabs.find((tab) => tab.name === "WARNING")?.content}</p>
                 </div>
-              ) : (
-                <div
-                  className="w-full "
+                <p
                   dangerouslySetInnerHTML={{
-                    __html: tabs.find((tab) => tab.name === activeTab)?.content,
+                    __html: tabs.find((tab) => tab.name === "WARNING")?.points,
                   }}
-                ></div>
-              )}
+                ></p>
+              </div>
+            </div>
+
+            {/* WARRANTY Section */}
+            <div
+              id="warranty"
+              ref={warrantyRef}
+              className={`py-2 px-6 mt-4 text-[16px] text-gray-700 overflow-auto ${
+                activeTab === "WARRANTY" ? "" : "hidden"
+              }`}
+            >
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: tabs.find((tab) => tab.name === "WARRANTY")?.content,
+                }}
+              ></div>
             </div>
           </div>
         </div>
       </section>
-
       <FirstOrder />
     </div>
   );
