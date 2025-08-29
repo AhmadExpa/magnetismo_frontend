@@ -99,17 +99,18 @@ const Home = () => {
   }, []);
 
  const bannerIntervalRef = useRef(null);
+ 
 
 useEffect(() => {
   startBannerInterval();
   return () => clearBannerInterval();
-}, []);
+}, [bannerSlides.length]);
 
 const startBannerInterval = () => {
   clearBannerInterval();
   bannerIntervalRef.current = setInterval(() => {
     setCurrentBannerSlide((prev) => (prev + 1) % bannerSlides.length);
-  }, 10000);
+  }, 3000);
 };
 
 const clearBannerInterval = () => {
@@ -177,7 +178,7 @@ const clearBannerInterval = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 3000,
     arrows: false,
     beforeChange: (current, next) => setActiveDot(next),
     customPaging: (i) => (
@@ -267,12 +268,6 @@ const clearBannerInterval = () => {
               className=""
             />
           </div>
-        </div>
-        <div className="absolute md:bottom-32 bottom-32 md:left-64 ps-2  font-bold">
-          <span className="bg-gray-50 md:px-3 px-1  text-sm md:text-2xl ">
-            {" "}
-            CLIP ON MAGNETISMO TO YOUR GLASSES FOR EFFECTIVE RELIEF
-          </span>
         </div>
       </section>
 
@@ -399,7 +394,7 @@ const clearBannerInterval = () => {
             </div>
             <div className="mt-3 flex justify-center md:ms-12 ms-0">
               <a
-                href="https://calendly.com/wasayal-talent-network/30min?month=2025-04"
+                href="https://telephysio.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="md:w-36 md:py-2 md:px-2 py-2 px-3 flex justify-center uppercase bg-[#277AB1] text-center text-white font-semibold hover:bg-[#273D73] transition duration-300 rounded-full"

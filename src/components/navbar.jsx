@@ -5,6 +5,7 @@ import { useAppSelector } from "../store/store";
 import logo from "../assets/home/Magnetismo_Logo.png";
 import cart from "../assets/home/Cart.png";
 import { motion, AnimatePresence } from "framer-motion";
+import { HashLink } from "react-router-hash-link";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,6 +25,13 @@ export default function Navbar() {
     0
   );
 
+  // Function to handle product dropdown item clicks
+  const handleProductItemClick = (hash) => {
+    // Navigate to product page with hash
+    navigate(`/product${hash}`);
+    closeMenu();
+    setProductDropdownOpen(false);
+  };
   useEffect(() => {
     const timer = setTimeout(() => {
       setStep((prev) => (prev === 3 ? 1 : prev + 1)); // loop back to 1 after 3
@@ -42,15 +50,21 @@ export default function Navbar() {
 
   const navigate = useNavigate();
   const handleMoneyBack = () => {
-    navigate('/moneyback');
+    navigate("/moneyback");
   };
 
   const handleHowItWorksClick = () => {
     if (dropdownOpen) {
-      navigate('/how-it-works');
+      navigate("/how-it-works");
       closeMenu();
     }
     toggleDropdown();
+  };
+  const [productDropdownOpen, setProductDropdownOpen] = useState(false);
+
+  const handleProductClick = () => {
+    setProductDropdownOpen(!productDropdownOpen);
+    setDropdownOpen(false); // ye "How it Works" wala close karega
   };
 
   return (
@@ -148,17 +162,53 @@ export default function Navbar() {
                 HOW IT WORKS <FiChevronDown className="ml-1" />
               </div>
               {dropdownOpen && (
-                <ul className="absolute left-0 mt-2 space-y-2 text-center bg-white rounded shadow-lg md:w-[130px]">
+                <ul className="absolute left-0 mt-2 space-y-2 text-center bg-white rounded shadow-lg md:w-[160px]">
                   <li>
                     <NavLink
-                      to="/story"
+                      to="how-it-works/story#story"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
                       onClick={() => {
                         closeMenu();
                         setDropdownOpen(false);
                       }}
                     >
-                      Story
+                      Our Story 
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/how-it-works/#mission"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      onClick={() => {
+                        closeMenu();
+                        setDropdownOpen(false);
+                      }}
+                    >
+                      Our Mission
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/how-it-works/#about"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      onClick={() => {
+                        closeMenu();
+                        setDropdownOpen(false);
+                      }}
+                    >
+                      About Us
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/how-it-works#how-to-use"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      onClick={() => {
+                        closeMenu();
+                        setDropdownOpen(false);
+                      }}
+                    >
+                      How to Use
                     </NavLink>
                   </li>
                   <li>
@@ -170,23 +220,66 @@ export default function Navbar() {
                         setDropdownOpen(false);
                       }}
                     >
-                      FAQ'S
+                      FAQs
                     </NavLink>
                   </li>
                 </ul>
               )}
             </div>
 
-            {/* Product Link */}
-            <NavLink
-              to="/product"
-              onClick={closeMenu}
-              className={({ isActive }) =>
-                isActive ? activeStyle : "hover:text-black transition"
-              }
-            >
-              PRODUCT
-            </NavLink>
+            {/* Product Dropdown */}
+            <div className="relative group">
+              <div
+                onClick={handleProductClick}
+                className="flex items-center hover:text-black transition cursor-pointer"
+              >
+                PRODUCT <FiChevronDown className="ml-1" />
+              </div>
+              {productDropdownOpen && (
+                <ul className="absolute left-0 mt-2 space-y-2 text-center bg-white rounded shadow-lg md:w-[160px]">
+                  <li>
+                    <button
+                      onClick={() => handleProductItemClick("#gallery")}
+                      className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200 text-left"
+                    >
+                      Gallery
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => handleProductItemClick("#instructions")}
+                      className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200 text-left"
+                    >
+                      Instructions
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => handleProductItemClick("#reviews")}
+                      className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200 text-left"
+                    >
+                      Reviews
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => handleProductItemClick("#warnings")}
+                      className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200 text-left"
+                    >
+                      Warnings
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => handleProductItemClick("#warranty")}
+                      className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200 text-left"
+                    >
+                      Warranty
+                    </button>
+                  </li>
+                </ul>
+              )}
+            </div>
 
             <NavLink
               to="/contact us"
@@ -202,14 +295,21 @@ export default function Navbar() {
           {/* Cart & Info */}
           <div className="items-center flex justify-end md:gap-4">
             <NavLink to="/cart" className="relative">
-              <img src={cart} alt="Cart" className="h-8 w-8 md:ms-0 sm:ms-3 xs:ms-36" />
+              <img
+                src={cart}
+                alt="Cart"
+                className="h-8 w-8 md:ms-0 sm:ms-3 xs:ms-36"
+              />
               {totalQuantity > 0 && (
                 <span className="bg-[#273771] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full absolute -top-2 -right-2 ">
                   {totalQuantity}
                 </span>
               )}
             </NavLink>
-            <div className="hidden md:block text-sm text-gray-700 cursor-pointer" onClick={handleMoneyBack}>
+            <div
+              className="hidden md:block text-sm text-gray-700 cursor-pointer"
+              onClick={handleMoneyBack}
+            >
               <span className="font-medium">Money Back</span>
               <p className="uppercase"> Guarantee</p>
             </div>
@@ -225,6 +325,7 @@ export default function Navbar() {
         {isOpen && (
           <div className="md:hidden absolute top-[60px] left-0 w-full bg-gray-100 shadow-md ">
             <ul className="flex flex-col ml-5 py-4 space-y-4">
+              {/* Mobile: Home */}
               <li>
                 <NavLink
                   to="/"
@@ -258,7 +359,19 @@ export default function Navbar() {
                           setDropdownOpen(false);
                         }}
                       >
-                        Story
+                        Our Story & Mission
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/how-it-works"
+                        className="block py-2 text-gray-700 hover:text-black"
+                        onClick={() => {
+                          closeMenu();
+                          setDropdownOpen(false);
+                        }}
+                      >
+                        How to Use
                       </NavLink>
                     </li>
                     <li>
@@ -270,24 +383,65 @@ export default function Navbar() {
                           setDropdownOpen(false);
                         }}
                       >
-                        FAQ'S
+                        FAQs
                       </NavLink>
                     </li>
                   </ul>
                 )}
               </li>
-
-              {/* Mobile: Product Link */}
+              {/* Mobile: Product Dropdown */}
               <li>
-                <NavLink
-                  to="/product"
-                  className="block py-2 text-gray-700 hover:text-black"
-                  onClick={closeMenu}
+                <div
+                  className="flex items-center justify-between py-2 text-gray-700 hover:text-black cursor-pointer"
+                  onClick={handleProductClick}
                 >
-                  Product
-                </NavLink>
+                  Product <FiChevronDown className="ml-1" />
+                </div>
+                {productDropdownOpen && (
+                  <ul className="ml-4 space-y-2">
+                    <li>
+                      <button
+                        onClick={() => handleProductItemClick("#gallery")}
+                        className="block w-full py-2 text-gray-700 hover:text-black text-left"
+                      >
+                        Gallery
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleProductItemClick("#instructions")}
+                        className="block w-full py-2 text-gray-700 hover:text-black text-left"
+                      >
+                        Instructions
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleProductItemClick("#reviews")}
+                        className="block w-full py-2 text-gray-700 hover:text-black text-left"
+                      >
+                        Reviews
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleProductItemClick("#warnings")}
+                        className="block w-full py-2 text-gray-700 hover:text-black text-left"
+                      >
+                        Warnings
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleProductItemClick("#warranty")}
+                        className="block w-full py-2 text-gray-700 hover:text-black text-left"
+                      >
+                        Warranty
+                      </button>
+                    </li>
+                  </ul>
+                )}
               </li>
-
               <li>
                 <NavLink
                   to="/contact us"

@@ -241,10 +241,14 @@ function HowitsWork() {
                     HOW TO USE
                   </h2>
                   <p className="text-gray-700 mb-4">
+                    Place the device gently over your eyes, ensuring a comfortable fit without excessive pressure. Use it for 15-30 minutes per session, ideally 2-3 times a day, especially after prolonged screen exposure. Regular use helps improve blood circulation, reducing headaches and eye strain. Avoid use if you have metal implants, pacemakers, or serious eye conditions without consulting a doctor.
+                  </p>
+                  <p className="text-gray-700 mb-4">
                     Magnetismo is designed for effortless integration into your
                     daily routine, providing relief while you tackle tasks
                     requiring focus and attention, like working on digital
                     screens or reading.
+                    
                   </p>
 
                   <ol className="text-gray-700 space-y-2">
