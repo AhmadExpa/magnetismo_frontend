@@ -8,7 +8,7 @@ export const VITE_TESTIMONIALS_SECTION_JESSICA_VIDEO_URL = "https://res.cloudina
 export const VITE_TESTIMONIALS_SECTION_JACK_VIDEO_URL = "https://res.cloudinary.com/ddtnvnuzi/video/upload/v1756347997/zack_khy1si.mp4"
 export const VITE_TESTIMONIALS_SECTION_ZACK_VIDEO_URL = "https://res.cloudinary.com/ddtnvnuzi/video/upload/v1756347992/martin_jjveb0.mp4"
 
-export const VITE_FOOTER_SECTION_VIDEO_URL = "https://res.cloudinary.com/ddtnvnuzi/video/upload/v1755636118/Magnetismo_Animattion_HD_vblxmd.mp4"
+export const VITE_FOOTER_SECTION_VIDEO_URL = "https://res.cloudinary.com/ddtnvnuzi/video/upload/v1756501905/VID-20250827-WA0060_accrfp.mp4"
 
 export const VITE_STORY_HERO_SECTION_VIDEO_URL = "https://res.cloudinary.com/ddtnvnuzi/video/upload/v1755636114/Magnetismo_Animattion_HD_Vertical_V2_u3ixpz.mp4"
 export const VITE_HOW_IT_WORKS_HERO_SECTION_VIDEO_URL = "https://res.cloudinary.com/ddtnvnuzi/video/upload/v1755636121/Magnetismo_Animation_3D_Girl_oq6epk.mp4"
