@@ -20,7 +20,7 @@ function App() {
   return (
     <>
       <Router>
-        <button
+        {/* <button
           className="fixed bottom-20 right-8 z-50 bg-green-500 p-3 rounded-full shadow-lg hover:bg-green-600 transition duration-300"
           onClick={() => {
             const phoneNumber = "1234567890";
@@ -31,7 +31,7 @@ function App() {
           }}
         >
           <FaWhatsapp className="text-white text-3xl" />
-        </button>
+        </button> */}
 
         <Navbar />
         <MainChatBot />

@@ -25,7 +25,6 @@ export default function Footer() {
         <video
           autoPlay
           loop
-          muted
           playsInline
           className="w-full shadow-lg object-cover brightness-enhance"
         >
