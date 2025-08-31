@@ -122,7 +122,7 @@ function HowitsWork() {
                 <div className=" md:w-[700px] md:h-[400px] ">
                   <video
                     src={VITE_HOW_IT_WORKS_HERO_SECTION_VIDEO2_URL}
-                    className=" mt-5 "
+                    className=" mt-5 py-2"
                     onMouseEnter={(e) => e.target.play()}
                     onMouseLeave={(e) => e.target.pause()}
                   />
@@ -217,7 +217,7 @@ function HowitsWork() {
               </div>
             </section>
 
-            <section id="how-to-use" className="py-10 px-6">
+            <section id="how-to-use" className="pt-10 px-6 scroll-mt-10">
               <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-10 relative">
                 <div className="md:w-1/4 relative flex justify-center">
                   <img

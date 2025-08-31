@@ -369,7 +369,7 @@ function ContactUs() {
     <div className="relative">
       <ToastContainer position="top-right" />
       <div className="relative w-full">
-        <video
+        {/* <video
           autoPlay
           loop
           muted
@@ -381,7 +381,7 @@ function ContactUs() {
             type="video/mp4"
           />
           Your browser does not support the video tag.
-        </video>
+        </video> */}
       </div>
       <section className="w-full bg-gray-100 flex justify-center items-center px-4">
         <div className="max-w-4xl w-full bg-gray-100 md:p-8 p-3">

@@ -168,28 +168,26 @@ const Products = () => {
   };
 
  
-  useEffect(() => {
-    // Handle hash navigation
-    if (location.hash) {
-      const hash = location.hash.toLowerCase();
-      const tabInfo = hashToTabMap[hash];
-
-      if (tabInfo) {
-        // Set the active tab
-        setActiveTab(tabInfo.tab);
-
-        // Scroll to the section after a short delay to allow rendering
-        setTimeout(() => {
-          if (tabInfo.ref.current) {
-            tabInfo.ref.current.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          }
-        }, 300);
-      }
+useEffect(() => {
+  // Handle hash navigation
+  if (location.hash) {
+    const hash = location.hash.toLowerCase();
+    const tabInfo = hashToTabMap[hash];
+    if (tabInfo) {
+      // Set the active tab
+      setActiveTab(tabInfo.tab);
+      // Scroll to the section after a short delay to allow rendering
+      setTimeout(() => {
+        if (tabInfo.ref.current) {
+          const navbarHeight = 120; // adjust this value to match your navbar height
+          const elementPosition = tabInfo.ref.current.getBoundingClientRect().top;
+          const offsetPosition = elementPosition - navbarHeight;
+          window.scrollBy({ top: offsetPosition, behavior: 'smooth' });
+        }
+      }, 300);
     }
-  }, [location.hash]);
+  }
+}, [location.hash]);
 
   const [productDetail, setProductDetail] = useState({
     title: "",
@@ -266,7 +264,7 @@ const Products = () => {
   }, []);
 
   return (
-    <div className=" bg-gray-100">
+    <div className="bg-gray-100">
       {/* Toast Component */}
       <Toast
         message={toast.message}
@@ -470,7 +468,7 @@ const Products = () => {
             <div
               id="gallery"
               ref={galleryRef}
-              className={`py-2 px-6 mt-4 text-[16px] text-gray-700 overflow-auto ${
+              className={`py-2 px-6 mt-4 text-[16px] text-gray-700 overflow-auto  ${
                 activeTab === "GALLERY" ? "" : "hidden"
               }`}
             >
@@ -485,7 +483,7 @@ const Products = () => {
             <div
               id="instructions"
               ref={instructionsRef}
-              className={`py-2 px-6 mt-4 text-[16px] text-gray-700 overflow-auto ${
+              className={`py-2 px-6 mt-4 text-[16px] text-gray-700 overflow-auto  ${
                 activeTab === "INSTRUCTIONS" ? "" : "hidden"
               }`}
             >
@@ -501,7 +499,7 @@ const Products = () => {
             <div
               id="reviews"
               ref={reviewRef}
-              className={`py-2 px-6 mt-4 text-[16px] text-gray-700 overflow-auto ${
+              className={`py-2 px-6 mt-4 text-[16px] text-gray-700 overflow-auto  ${
                 activeTab === "REVIEWS" ? "" : "hidden"
               }`}
             >
@@ -512,7 +510,7 @@ const Products = () => {
             <div
               id="warnings"
               ref={warningsRef}
-              className={`py-2 px-6 mt-4 text-[16px] text-gray-700 overflow-auto ${
+              className={`py-2 px-6 mt-4 text-[16px] text-gray-700 overflow-auto  ${
                 activeTab === "WARNING" ? "" : "hidden"
               }`}
             >
