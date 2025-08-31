@@ -5,8 +5,8 @@ export const VITE_PRICE_VIDEO_IN_INNOVATIVE_AND_HOW_IT_WORKS_PAGE = "https://res
 
 
 export const VITE_TESTIMONIALS_SECTION_JESSICA_VIDEO_URL = "https://res.cloudinary.com/ddtnvnuzi/video/upload/v1756347985/jessica_ecctgb.mp4"
-export const VITE_TESTIMONIALS_SECTION_JACK_VIDEO_URL = "https://res.cloudinary.com/ddtnvnuzi/video/upload/v1756347997/zack_khy1si.mp4"
-export const VITE_TESTIMONIALS_SECTION_ZACK_VIDEO_URL = "https://res.cloudinary.com/ddtnvnuzi/video/upload/v1756347992/martin_jjveb0.mp4"
+export const VITE_TESTIMONIALS_SECTION_JACK_VIDEO_URL = "https://res.cloudinary.com/ddtnvnuzi/video/upload/v1756347992/martin_jjveb0.mp4"
+export const VITE_TESTIMONIALS_SECTION_ZACK_VIDEO_URL = "https://res.cloudinary.com/ddtnvnuzi/video/upload/v1756347997/zack_khy1si.mp4"
 
 export const VITE_FOOTER_SECTION_VIDEO_URL = "https://res.cloudinary.com/ddtnvnuzi/video/upload/v1756501905/VID-20250827-WA0060_accrfp.mp4"
 

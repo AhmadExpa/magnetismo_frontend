@@ -379,8 +379,7 @@ const Home = () => {
             </div>
             <div className="mt-3 flex justify-center md:ms-12 ms-0">
               <a
-                href="https://telephysio.com/"
-                target="_blank"
+                href="/contact us"
                 rel="noopener noreferrer"
                 className="md:w-36 md:py-2 md:px-2 py-2 px-3 flex justify-center uppercase bg-[#277AB1] text-center text-white font-semibold hover:bg-[#273D73] transition duration-300 rounded-full"
               >

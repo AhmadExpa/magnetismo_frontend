@@ -28,7 +28,7 @@ const Story = () => {
   return (
     <>
     <div
-      className="max-w-[1360px] mx-auto bg-gray-100 
+      className="w-full mx-auto bg-gray-100 
      "
     >
       <section>
