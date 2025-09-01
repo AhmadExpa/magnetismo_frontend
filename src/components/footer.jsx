@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import logo from "../assets/home/Magnetismo_Logo.png";
 import { FiPhone, FiMapPin, FiMail } from "react-icons/fi";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaXTwitter, FaYoutube } from "react-icons/fa6";
 import { FaFacebookF, FaLinkedinIn, FaInstagram } from "react-icons/fa";
 import "./footer.css";
 import payment from "../assets/footer/payment.png";
@@ -136,12 +136,12 @@ export default function Footer() {
             <div className="w-full md:w-auto flex flex-col items-center md:items-start mt-0 md:mt-24">
               <div className="flex space-x-4 text-xl">
                 <a
-                  href="https://twitter.com/YourTwitterHandle"
+                  href="https://www.youtube.com/@TheMagnetismo-js3jd"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-white"
                 >
-                  <FaXTwitter />
+                  <FaYoutube />
                 </a>
                 <a
                   href="https://www.facebook.com/profile.php?id=61571953774783"
@@ -151,14 +151,7 @@ export default function Footer() {
                 >
                   <FaFacebookF />
                 </a>
-                <a
-                  href="https://linkedin.com/in/YourLinkedInProfile"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white"
-                >
-                  <FaLinkedinIn />
-                </a>
+               
                 <a
                   href="https://www.instagram.com/the_magnetismo/"
                   target="_blank"

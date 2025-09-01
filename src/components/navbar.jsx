@@ -60,7 +60,7 @@ export default function Navbar() {
   return (
     <>
       {/* Top Bar */}
-      <nav className="top-0 left-0 w-full z-[100] mb-0 group overflow-hidden h-10">
+      <nav className="top-0 left-0 w-full z-[100] mb-0 group overflow-hidden h-10" id="navbar">
         <div className="bg-[#293E75] transition-all duration-300 transform">
           <AnimatePresence mode="wait">
             {step === 1 && (
@@ -185,7 +185,7 @@ export default function Navbar() {
                 <ul className="absolute left-0 mt-2 space-y-2 text-center bg-white rounded shadow-lg md:w-[220px]">
                   <li>
                     <NavLink
-                      to="/story"
+                      to="/story#story-section"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
                       onClick={closeMenu}
                     >
@@ -370,7 +370,7 @@ export default function Navbar() {
                   <ul className="ml-4 space-y-2">
                     <li>
                       <NavLink
-                        to="/story"
+                        to="/story#story-section"
                         className="block py-2 text-gray-700 hover:text-black"
                         onClick={closeMenu}
                       >
