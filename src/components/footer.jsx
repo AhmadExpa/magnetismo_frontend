@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import logo from "../assets/home/Magnetismo_Logo.png";
 import { FiPhone, FiMapPin, FiMail } from "react-icons/fi";
 import { FaXTwitter } from "react-icons/fa6";
@@ -15,6 +15,27 @@ export default function Footer() {
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
 
+  const videoRef = useRef(null);
+  const [muted, setMuted] = useState(true);
+
+  useEffect(() => {
+    // Autoplay muted
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current
+        .play()
+        .catch((err) => console.log("Muted autoplay only (expected):", err));
+    }
+  }, []);
+
+  const handleUnmute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      videoRef.current.play(); // re-trigger play with sound
+      setMuted(false);
+    }
+  };
+
   const handleRoute = (route) => {
     navigate(`/${route}`);
   };
@@ -22,15 +43,29 @@ export default function Footer() {
   return (
     <>
       <div className="mt-6 w-full flex justify-center items-center relative">
-        <video
-          autoPlay
-          loop
-          playsInline
-          className="w-full shadow-lg object-cover brightness-enhance"
-        >
-          <source src={VITE_FOOTER_SECTION_VIDEO_URL} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <div className="relative">
+          <video
+            ref={videoRef}
+            autoPlay
+            loop
+            playsInline
+            muted={muted}
+            preload="auto"
+            className="w-full shadow-lg object-cover brightness-enhance"
+          >
+            <source src={VITE_FOOTER_SECTION_VIDEO_URL} type="video/mp4" />
+          </video>
+
+          {/* Show unmute button only when muted */}
+          {muted && (
+            <button
+              onClick={handleUnmute}
+              className="absolute bottom-4 right-4 bg-black/60 text-white px-4 py-2 rounded-lg text-sm hover:bg-black/80 transition"
+            >
+              🔊 Unmute
+            </button>
+          )}
+        </div>
       </div>
 
       {showPopup && (
