@@ -226,7 +226,7 @@ export default function Navbar() {
                 <ul className="absolute left-0 mt-2 space-y-2 text-center bg-white rounded shadow-lg md:w-[160px]">
                   <li>
                     <button
-                      onClick={() => handleProductItemClick("#gallery")}
+                      onClick={() => handleProductItemClick("#product")}
                       className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200 text-left"
                     >
                       Gallery
@@ -411,7 +411,7 @@ export default function Navbar() {
                   <ul className="ml-4 space-y-2">
                     <li>
                       <button
-                        onClick={() => handleProductItemClick("#gallery")}
+                        onClick={() => handleProductItemClick("#product")}
                         className="block w-full py-2 text-gray-700 hover:text-black text-left"
                       >
                         Gallery

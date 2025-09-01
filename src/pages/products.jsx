@@ -22,8 +22,6 @@ import {
   VITE_PRODUCT_ID,
 } from "../enviroment";
 
-
-
 const images = [
   newforproductthree,
   newforproduct,
@@ -146,7 +144,6 @@ const Products = () => {
   const warningsRef = useRef(null);
   const warrantyRef = useRef(null);
 
-
   // Toast state
   const [toast, setToast] = useState({
     isVisible: false,
@@ -154,9 +151,9 @@ const Products = () => {
     type: "success",
   });
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
   // Map hash values to tab names and refs
   const hashToTabMap = {
@@ -167,27 +164,48 @@ const Products = () => {
     "#warranty": { tab: "WARRANTY", ref: warrantyRef },
   };
 
- 
-useEffect(() => {
-  // Handle hash navigation
-  if (location.hash) {
-    const hash = location.hash.toLowerCase();
+  useEffect(() => {
+    const hash = location.hash;
+    let extraOffset = 20; // navbar ke neeche ka gap
+
+    if (hash === "#product") {
+      setTimeout(() => {
+        const el = document.getElementById("product");
+        if (el) {
+          const navbar = document.getElementById("navbar");
+          const navbarHeight = navbar ? navbar.offsetHeight : 0;
+
+          const y =
+            el.getBoundingClientRect().top +
+            window.scrollY -
+            (navbarHeight + extraOffset);
+
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      }, 200);
+      return;
+    }
+
     const tabInfo = hashToTabMap[hash];
     if (tabInfo) {
-      // Set the active tab
+      extraOffset = 100;
       setActiveTab(tabInfo.tab);
-      // Scroll to the section after a short delay to allow rendering
+
       setTimeout(() => {
         if (tabInfo.ref.current) {
-          const navbarHeight = 120; // adjust this value to match your navbar height
-          const elementPosition = tabInfo.ref.current.getBoundingClientRect().top;
-          const offsetPosition = elementPosition - navbarHeight;
-          window.scrollBy({ top: offsetPosition, behavior: 'smooth' });
+          const navbar = document.getElementById("navbar");
+          const navbarHeight = navbar ? navbar.offsetHeight : 0;
+
+          const y =
+            tabInfo.ref.current.getBoundingClientRect().top +
+            window.scrollY -
+            (navbarHeight + extraOffset);
+
+          window.scrollTo({ top: y, behavior: "smooth" });
         }
-      }, 300);
+      }, 200);
     }
-  }
-}, [location.hash]);
+  }, [location.hash]);
 
   const [productDetail, setProductDetail] = useState({
     title: "",
@@ -291,7 +309,7 @@ useEffect(() => {
         </div>
       </section>
 
-      <section>
+      <section id="product" className="scroll-mt-5">
         <div className="flex flex-col max-w-4xl mx-auto md:p-12 p-4">
           <div className="flex md:gap-4 flex-col md:flex-row justify-center items-center md:mb-3">
             <img src={logo} alt="" />
