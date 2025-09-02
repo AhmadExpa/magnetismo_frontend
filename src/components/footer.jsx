@@ -28,11 +28,17 @@ export default function Footer() {
     }
   }, []);
 
-  const handleUnmute = () => {
+  // Toggle mute/unmute
+  const handleToggleMute = () => {
     if (videoRef.current) {
-      videoRef.current.muted = false;
-      videoRef.current.play(); // re-trigger play with sound
-      setMuted(false);
+      const newMutedState = !muted;
+      videoRef.current.muted = newMutedState;
+      setMuted(newMutedState);
+
+      if (!newMutedState) {
+        // Unmute hone ke baad dobara play call karo
+        videoRef.current.play();
+      }
     }
   };
 
@@ -56,15 +62,13 @@ export default function Footer() {
             <source src={VITE_FOOTER_SECTION_VIDEO_URL} type="video/mp4" />
           </video>
 
-          {/* Show unmute button only when muted */}
-          {muted && (
-            <button
-              onClick={handleUnmute}
-              className="absolute bottom-4 right-4 bg-black/60 text-white px-4 py-2 rounded-lg text-sm hover:bg-black/80 transition"
-            >
-              🔊 Unmute
-            </button>
-          )}
+          {/* Mute/Unmute button */}
+          <button
+            onClick={handleToggleMute}
+            className="absolute bottom-4 right-4 bg-black/60 text-white px-4 py-2 rounded-lg text-sm hover:bg-black/80 transition"
+          >
+            {muted ? "🔊 Unmute" : "🔇 Mute"}
+          </button>
         </div>
       </div>
 
@@ -151,7 +155,7 @@ export default function Footer() {
                 >
                   <FaFacebookF />
                 </a>
-               
+
                 <a
                   href="https://www.instagram.com/the_magnetismo/"
                   target="_blank"

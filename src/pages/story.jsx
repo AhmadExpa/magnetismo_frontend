@@ -99,7 +99,13 @@ const Story = () => {
           <h1 className="text-center text-[#273771] text-3xl font-bold mt-6">
             OUR STORY
           </h1>
-          <img src={pen} alt="" className="mx-auto" />
+       <img 
+  src={pen} 
+  alt="" 
+  className="mx-auto w-full md:w-3/4 lg:w-3/4 h-auto" 
+/>
+
+
 
           <div className="max-w-4xl mx-auto text-center">
             <h3 className="text-xl font-semibold mb-4 mt-3">
