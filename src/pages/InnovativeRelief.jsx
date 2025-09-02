@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./home.css";
 import { GiReceiveMoney } from "react-icons/gi";
 import { LiaFlagUsaSolid } from "react-icons/lia";
@@ -9,12 +9,33 @@ import { VITE_PRICE_VIDEO_IN_INNOVATIVE_AND_HOW_IT_WORKS_PAGE } from "../envirom
 
 const InnovativeRelief = () => {
   const navigate = useNavigate();
+  const videoRef = useRef(null);
+  const [muted, setMuted] = useState(true);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current
+        .play()
+        .catch((err) => console.log("Muted autoplay only (expected):", err));
+    }
+  }, []);
+
+  const handleToggleMute = () => {
+    if (videoRef.current) {
+      const newMutedState = !muted;
+      videoRef.current.muted = newMutedState;
+      setMuted(newMutedState);
+
+      if (!newMutedState) {
+        videoRef.current.play();
+      }
+    }
+  };
 
   const goToPolicy = () => {
     navigate("/moneyback", { state: { activeTab: "MoneyBack" } });
   };
-
- 
 
   const handleNavigateToReviews = () => {
     navigate("/product", {
@@ -24,18 +45,27 @@ const InnovativeRelief = () => {
 
   return (
     <div className="lg:flex flex-col lg:flex-row mx-auto mt-16 md:w-[90%]">
-      <div className="lg:w-1/2 md:w-full relative  mb-8 md:mb-0 flex justify-center items-center">
-        <div className="flex justify-center items-center w-full">
-          <div className="w-full max-w-xl md:mb-4 mx-auto">
+      <div className="lg:w-1/2 md:w-full relative mb-8 md:mb-0 flex justify-center items-center">
+        <div className="flex justify-center items-center w-full relative">
+          <div className="w-full max-w-xl md:mb-4 mx-auto relative">
             <video
-              src={
-                VITE_PRICE_VIDEO_IN_INNOVATIVE_AND_HOW_IT_WORKS_PAGE
-              }
+              ref={videoRef}
+              src={VITE_PRICE_VIDEO_IN_INNOVATIVE_AND_HOW_IT_WORKS_PAGE}
               autoPlay
               loop
-              muted
+              playsInline
+              muted={muted}
+              preload="auto"
               className="w-full h-auto object-cover sm:rounded-xl"
             />
+
+            {/* Mute/Unmute button */}
+            <button
+              onClick={handleToggleMute}
+              className="absolute bottom-4 right-4 bg-black/60 text-white px-4 py-2 rounded-lg text-sm hover:bg-black/80 transition"
+            >
+              {muted ? "🔊 Unmute" : "🔇 Mute"}
+            </button>
           </div>
         </div>
       </div>
@@ -91,7 +121,6 @@ const InnovativeRelief = () => {
               </div>
             </ul>
           </div>
-         
         </div>
         <div className="md:flex items-center  md:gap-2 gap-0 md:p-0 p-3 md:mt-5">
           <div
@@ -109,26 +138,22 @@ const InnovativeRelief = () => {
             <LiaFlagUsaSolid className="text-4xl  text-[#273771]" />
             <span className="text-sm">Made in USA</span>
           </div>
-          <div
-            className="flex items-center md:gap-2 gap-4 cursor-pointer md:mt-0 mt-2"
-          
-          >
+          <div className="flex items-center md:gap-2 gap-4 cursor-pointer md:mt-0 mt-2">
             <AiOutlineSafetyCertificate className="text-4xl  text-[#273771] md:mt-0 mt-2" />
             <span className="text-sm">1 Year Warranty</span>
           </div>
         </div>
         <div className="">
-            <div className="flex justify-start md:ms-0 ms-5 ">
-              <button
-                className="w-36 uppercase bg-[#4682B4] hover:bg-[#000080]  mt-3 p-2 text-white rounded-full px-6"
-                onClick={() => navigate("/product#carrt")}
-              >
-                Shop now
-              </button>
-            </div>
+          <div className="flex justify-start md:ms-0 ms-5 ">
+            <button
+              className="w-36 uppercase bg-[#4682B4] hover:bg-[#000080]  mt-3 p-2 text-white rounded-full px-6"
+              onClick={() => navigate("/product#carrt")}
+            >
+              Shop now
+            </button>
           </div>
+        </div>
       </div>
-      
     </div>
   );
 };
