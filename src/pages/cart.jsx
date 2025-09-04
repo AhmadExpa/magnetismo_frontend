@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../store/store";
-import pimg from "../assets/product/img1.png";
+import pimg from "../assets/product/main.png";
 import payment from "../assets/footer/payment.png";
 import { useDispatch } from "react-redux";
 import {
